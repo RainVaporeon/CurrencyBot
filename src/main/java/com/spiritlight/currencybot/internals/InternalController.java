@@ -4,7 +4,7 @@ import java.util.UUID;
 
 /**
  * A class for interacting with the internal system code in this program.
- *
+ * <p>
  * The key should not be shared at all, unless the
  */
 public final class InternalController {
@@ -36,7 +36,6 @@ public final class InternalController {
     /**
      * Enables key checking. This is enabled by default and
      * enabling it again will throw an exception instead.
-     * @return A new key for interacting with this controller.
      */
     public void enableKeyChecking() {
         if(checkKey) throw new IllegalStateException("Cannot enable an already enabled feature.");
@@ -66,7 +65,7 @@ public final class InternalController {
     /**
      * An object that acts as a sort of access key. Each key have
      * a UUID denoting its key content.
-     *
+     * <p>
      * Although it is possible to use this key outside internal purposes,
      * it's advised that one make their own implementation instead.
      */

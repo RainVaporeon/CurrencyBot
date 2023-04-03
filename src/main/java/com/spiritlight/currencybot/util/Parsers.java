@@ -21,6 +21,7 @@ public class Parsers {
         return currencyMap;
     };
 
+    @SuppressWarnings("SameReturnValue")
     public static JsonParser<String, Double> currencyApi() {
         return CURRENCY_API;
     }

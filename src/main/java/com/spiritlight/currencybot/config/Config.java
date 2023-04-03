@@ -1,18 +1,15 @@
 package com.spiritlight.currencybot.config;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
-import com.spiritlight.currencybot.Main;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class Config {
     private static boolean antiLoop = false;
 
@@ -45,7 +42,7 @@ public class Config {
         JsonWriter writer = new JsonWriter(new FileWriter("config/CurrencyBot.json"));
         writer.beginObject();
         writer.name("token").value("");
-        writer.name("leniency").value("");
+        writer.name("apiKey").value("");
         writer.endObject();
         writer.close();
     }

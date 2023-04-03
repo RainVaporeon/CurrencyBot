@@ -35,6 +35,7 @@ public class StateManager {
         return state.getOrDefault(flag, false);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected final void finalize() {}
 }
