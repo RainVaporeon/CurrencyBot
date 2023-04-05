@@ -1,5 +1,6 @@
 package com.spiritlight.currencybot.internals;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -83,6 +84,19 @@ public final class InternalController {
 
         public void check(AccessKey key) {
             this.check(key.key);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            AccessKey accessKey = (AccessKey) o;
+            return key.equals(accessKey.key);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(key);
         }
     }
 }

@@ -3,26 +3,30 @@ package com.spiritlight.currencybot.config;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
+import com.spiritlight.currencybot.internals.InternalController;
+import com.spiritlight.currencybot.util.LockedReference;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class Config {
     private static boolean antiLoop = false;
 
-    public static String TOKEN;
-    public static String API_KEY;
+    // note: probably could've used self reference if not for static, saving the burden
+    private static final InternalController.AccessKey key = new InternalController.AccessKey();
+
+    public static final LockedReference<String> TOKEN = new LockedReference<>(null, key);
+    public static final LockedReference<String> API_KEY = new LockedReference<>(null, key);
 
     public static void read() throws IOException {
         File config = new File("config/CurrencyBot.json");
         if (config.exists()) {
             try {
                 JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new FileReader("config/CurrencyBot.json"));
-                TOKEN = jsonObject.get("token").getAsString();
-                API_KEY = jsonObject.get("apiKey").getAsString();
+                String token = jsonObject.get("token").getAsString();
+                String apiKey = jsonObject.get("apiKey").getAsString();
+                TOKEN.set(token, key);
+                API_KEY.set(apiKey, key);
             } catch (NullPointerException exception) {
                 System.out.println("New configuration files found?");
                 if(antiLoop) return;
@@ -31,6 +35,7 @@ public class Config {
                 read();
             }
         } else {
+            // Generates a new file, overwriting the previous one
             File root = new File("config");
             root.mkdir();
             config.createNewFile();
@@ -47,13 +52,4 @@ public class Config {
         writer.close();
     }
 
-    public static boolean save() {
-        try {
-            write();
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
 }

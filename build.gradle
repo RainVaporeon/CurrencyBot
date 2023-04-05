@@ -21,7 +21,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation 'com.google.guava:guava:31.1-jre'
     // https://github.com/DV8FromTheWorld/JDA/releases
-    implementation ('net.dv8tion:JDA:4.4.0_352') {
+    implementation ('net.dv8tion:JDA:5.0.0-alpha.21') {
         exclude module: 'opus-java'
     }
 }

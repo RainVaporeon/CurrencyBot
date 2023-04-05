@@ -9,28 +9,31 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
-import javax.security.auth.login.LoginException;
-
 public class Discord {
     private final JDA jda;
 
-    public Discord(String token) throws LoginException {
-        this.jda = JDABuilder.createDefault(token)
-                .enableIntents(GatewayIntent.DIRECT_MESSAGES)
-                .enableIntents(GatewayIntent.GUILD_MESSAGES)
-                .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .disableCache(CacheFlag.VOICE_STATE)
-                .disableCache(CacheFlag.EMOTE)
-                .setMemberCachePolicy(MemberCachePolicy.ALL)
-                .setAutoReconnect(true)
-                .build();
+    public Discord(String token) {
+        try {
+            this.jda = JDABuilder.createDefault(token)
+                    .enableIntents(GatewayIntent.DIRECT_MESSAGES)
+                    .enableIntents(GatewayIntent.GUILD_MESSAGES)
+                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                    .disableCache(CacheFlag.VOICE_STATE)
+                    .disableCache(CacheFlag.EMOJI)
+                    .disableCache(CacheFlag.STICKER)
+                    .setMemberCachePolicy(MemberCachePolicy.ALL)
+                    .setAutoReconnect(true)
+                    .build().awaitReady();
+        } catch (InterruptedException e) {
+            throw new IllegalThreadStateException();
+        }
     }
 
     public JDA getJDA() {
         return jda;
     }
 
-    public void addListener(EventListener... listeners) {
+    public void addListeners(EventListener... listeners) {
         jda.addEventListener((Object[]) listeners);
     }
 
