@@ -3,7 +3,6 @@ package com.spiritlight.currencybot.misc;
 import java.util.Map;
 
 public class SharedConstants {
-    // https://api.currencyapi.com/v3/latest?apikey=d4gUGVYZb8UMZtT7Zt65cDOaMoIgX0cjDRSP1JQ7
     // Ratelimit: 300/mo (average 10/day)
     public static final String CURRENCY_API = "https://api.currencyapi.com/v3/latest?apikey={0}";
 
