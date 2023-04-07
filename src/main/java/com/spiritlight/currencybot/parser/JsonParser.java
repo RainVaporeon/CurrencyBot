@@ -10,7 +10,4 @@ import java.util.Map;
 public interface JsonParser<K, V> {
     Map<K, V> parse(JsonObject object);
 
-    default Map<K, V> parse(String json) throws JsonParseException {
-        return parse(new Gson().fromJson(json, JsonObject.class));
-    }
 }

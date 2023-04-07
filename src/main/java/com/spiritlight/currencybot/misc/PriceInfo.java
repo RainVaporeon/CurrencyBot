@@ -7,9 +7,12 @@ import com.google.gson.JsonObject;
 import com.spiritlight.currencybot.collections.ImmutablePair;
 import com.spiritlight.currencybot.collections.Pair;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+@Immutable
 public class PriceInfo {
     private final Map<String, Double> map;
     private final long time;
@@ -30,6 +33,10 @@ public class PriceInfo {
 
     public Map<String, Double> getMap() {
         return ImmutableMap.copyOf(map);
+    }
+
+    public long getTime() {
+        return time;
     }
 
     public int size() {
@@ -70,5 +77,18 @@ public class PriceInfo {
     @Override
     public String toString() {
         return this.toJson().toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PriceInfo priceInfo = (PriceInfo) o;
+        return time == priceInfo.time && Objects.equals(map, priceInfo.map);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(map, time);
     }
 }

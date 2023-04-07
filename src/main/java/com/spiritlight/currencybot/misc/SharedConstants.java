@@ -1,19 +1,18 @@
 package com.spiritlight.currencybot.misc;
 
-import java.util.Map;
+import com.spiritlight.currencybot.collections.Pair;
 
 public class SharedConstants {
-    // Ratelimit: 300/mo (average 10/day)
+
     public static final String CURRENCY_API = "https://api.currencyapi.com/v3/latest?apikey={0}";
 
-    public static String getCurrencyApi(String token, Map<String, String> parameters) {
+    @SafeVarargs
+    public static String getCurrencyApi(String token, Pair<String, String>... parameters) {
         String base = CURRENCY_API.replace("{0}", token);
         if(parameters == null) return base;
         StringBuilder sb = new StringBuilder(base);
-        if(!parameters.isEmpty()) sb.append("&");
-        for(Map.Entry<String, String> param : parameters.entrySet()) {
-            sb.append(param.getKey()).append("=").append(param.getValue());
-            sb.append("&");
+        for(Pair<String, String> param : parameters) {
+            sb.append("&").append(param.getKey()).append("=").append(param.getValue());
         }
         return sb.toString();
     }

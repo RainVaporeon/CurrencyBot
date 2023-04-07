@@ -1,7 +1,6 @@
 package com.spiritlight.currencybot.collections;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.function.BiFunction;
 
 public interface Pair<K, V> extends Serializable {
@@ -17,9 +16,4 @@ public interface Pair<K, V> extends Serializable {
         return ImmutablePair.of(key, value);
     }
 
-
-
-    default <R> R operate(BiFunction<K, V, R> function) {
-        return function.apply(getKey(), getValue());
-    }
 }

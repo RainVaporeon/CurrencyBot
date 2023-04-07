@@ -3,6 +3,7 @@ package com.spiritlight.currencybot.config;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
+import com.spiritlight.currencybot.Main;
 import com.spiritlight.currencybot.internals.InternalController;
 import com.spiritlight.currencybot.util.LockedReference;
 
@@ -33,6 +34,9 @@ public class Config {
                 antiLoop = true;
                 write();
                 read();
+            } finally {
+                // Sort the deserialized data in case any modifications occur
+                Main.sortTime();
             }
         } else {
             // Generates a new file, overwriting the previous one

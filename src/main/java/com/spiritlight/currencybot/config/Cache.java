@@ -53,13 +53,4 @@ public class Cache {
         writer.close();
     }
 
-    public static boolean save() {
-        try {
-            write();
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
 }

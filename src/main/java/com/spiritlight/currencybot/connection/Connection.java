@@ -6,11 +6,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.spiritlight.currencybot.connection.Type.JSON;
 
+@SuppressWarnings("ConstantConditions")
 public class Connection {
     private static final OkHttpClient client = new OkHttpClient()
             .newBuilder()
@@ -40,29 +40,4 @@ public class Connection {
         }
     }
 
-    public static String call(String url, Method method, RequestDetails details) throws IOException {
-        Request.Builder builder = new Request.Builder();
-        builder.url(url);
-        switch(method) {
-            case GET -> builder.get();
-            case PUT -> builder.put(details.getRequestBody());
-            case POST -> builder.post(details.getRequestBody());
-            case PATCH -> builder.patch(details.getRequestBody());
-        }
-        if(details.hasHeader()) {
-            for(Map.Entry<String, String> entry : details.getHeaders().entrySet()) {
-                builder.addHeader(entry.getKey(), entry.getValue());
-            }
-        }
-        try(Response response = client.newCall(builder.build()).execute()) {
-            return response.body() == null ? "null" : response.body().string();
-        }
-    }
-
-    public enum Method {
-        GET,
-        POST,
-        PATCH,
-        PUT
-    }
 }
